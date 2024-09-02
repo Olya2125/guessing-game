@@ -1,29 +1,39 @@
 class GuessingGame {
     constructor() {
-        this.min = 0;
-        this.max = 0;
-        this.currentGuess =0;
+        this.min = null;
+        this.max = null;
+        this.lastGuess = null;
     }
 
     setRange(min, max) {
-this.min = min;
-this.max = max;
-this.currentGuess = Math.floor((min + max) / 2);
+        this.min = min;
+        this.max = max;
    }
 
     guess() {
-return this.currentGuess;
+        if (this.min === null || this.max === null) {
+            throw new Error("Range not set");
+        }
+            this.lastGuess = Math.floor((this.min + this.max) / 2);
+            return this.lastGuess;
     }
 
     lower() {
-this.max = this.currentGuess - 1;
-this.currentGuess = Math.floor((this.min + this.max) / 2);
+        if (this.lastGuess === null) {
+            throw new Error("No previous guess");
+          }
+      
+          this.max = this.lastGuess - 1;
     }
 
     greater() {
-this.min = this.currentGuess + 1;
-this.currentGuess = Math.floor((this.min + this.max) / 2);
+        if (this.lastGuess === null) {
+            throw new Error("No previous guess");
+          }
+      
+          this.min = this.lastGuess + 1;
+        }
     }
-}
+
 
 module.exports = GuessingGame;
